@@ -18,7 +18,6 @@ const galleryItemsLightbox = galleryItems
     .join('');
 
 gallery.innerHTML = galleryItemsLightbox;
-// gallery.insertAdjacentHTML('afterbegin', galleryItemsLightbox);
 
 gallery.addEventListener('click', e => {
     e.preventDefault();
@@ -27,21 +26,14 @@ gallery.addEventListener('click', e => {
     if (!isImageEl) return;
     createModalWindow(e);
 });
-let instance;
 function createModalWindow(e) {
-    instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`, {
+    const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`, {
         onShow: () => {
-            addEventListener('keydown', onEscapePress);
-        },
-
-        onClose: () => {
-            removeEventListener('keydown', onEscapePress);
+            addEventListener('keydown', e => {
+                if (e.code !== 'Escape') return;
+                instance.close();
+            });
         },
     });
     instance.show();
-}
-
-function onEscapePress(e) {
-    if (e.code !== 'Escape') return;
-    instance.close();
 }
