@@ -26,13 +26,20 @@ gallery.addEventListener('click', e => {
     const isImageEl = e.target.classList.contains('gallery__image');
     if (!isImageEl) return;
 
-    const createModalWindow = e => {
+    function createModalWindow(e) {
         // console.log(e.target.dataset.source);
         return basicLightbox.create(`
     <img src="${e.target.dataset.source}">
 `);
-    };
+    }
     createModalWindow(e).show();
+    addEventListener('keydown', closeModalWindow);
+
+    function closeModalWindow(e) {
+        if (e.code !== 'Escape') return;
+        createModalWindow(e).close();
+        removeEventListener('keydown', closeModalWindow);
+    }
 });
 
 /* console.log(gallery);
