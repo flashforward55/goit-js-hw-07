@@ -20,5 +20,20 @@ const galleryItemsLightbox = galleryItems
 gallery.innerHTML = galleryItemsLightbox;
 // gallery.insertAdjacentHTML('afterbegin', galleryItemsLightbox);
 
-console.log(gallery);
-console.log(galleryItemsLightbox);
+gallery.addEventListener('click', e => {
+    e.preventDefault();
+
+    const isImageEl = e.target.classList.contains('gallery__image');
+    if (!isImageEl) return;
+
+    const createModalWindow = e => {
+        // console.log(e.target.dataset.source);
+        return basicLightbox.create(`
+    <img src="${e.target.dataset.source}">
+`);
+    };
+    createModalWindow(e).show();
+});
+
+/* console.log(gallery);
+console.log(galleryItemsLightbox); */
