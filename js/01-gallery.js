@@ -34,6 +34,12 @@ function createModalWindow(e) {
                 instance.close();
             });
         },
+        onClose: () => {
+            removeEventListener('keydown', e => {
+                if (e.code !== 'Escape') return;
+                instance.close();
+            });
+        },
     });
     instance.show();
 }
