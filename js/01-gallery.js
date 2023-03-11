@@ -29,17 +29,16 @@ gallery.addEventListener('click', e => {
 function createModalWindow(e) {
     const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`, {
         onShow: () => {
-            addEventListener('keydown', e => {
-                if (e.code !== 'Escape') return;
-                instance.close();
-            });
+            addEventListener('keydown', onEscapePress);
         },
         onClose: () => {
-            removeEventListener('keydown', e => {
-                if (e.code !== 'Escape') return;
-                instance.close();
-            });
+            removeEventListener('keydown', onEscapePress);
         },
     });
+
+    function onEscapePress(e) {
+        if (e.code !== 'Escape') return;
+        instance.close();
+    }
     instance.show();
 }
